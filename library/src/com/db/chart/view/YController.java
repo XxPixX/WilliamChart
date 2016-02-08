@@ -73,7 +73,7 @@ public class YController extends AxisController{
 
         if(handleValues)
             return (float) ( chartView.horController.axisPosition -
-                (((value - minLabelValue) * screenStep) / (labelsValues.get(1) - minLabelValue)));
+                (((value - minLabelValue) * screenStep) / (labelsValues.get(0) - minLabelValue)));
         else
             return labelsPos.get(index);
     }
