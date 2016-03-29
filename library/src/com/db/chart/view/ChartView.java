@@ -848,7 +848,7 @@ public abstract class ChartView extends RelativeLayout {
 
             if (event.getAction() == MotionEvent.ACTION_DOWN &&
                     (mTooltip != null || mEntryListener != null) &&
-                    mRegions != null) {
+                    mRegions != null && !mRegions.isEmpty()) {
 
                 //Check if ACTION_DOWN over any ScreenPoint region.
                 int nSets = mRegions.size();
