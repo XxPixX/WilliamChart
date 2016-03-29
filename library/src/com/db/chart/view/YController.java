@@ -16,34 +16,32 @@
 
 package com.db.chart.view;
 
-import java.util.Collections;
-
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
 
+import java.util.Collections;
+
 
 /**
- * Class responsible to control vertical measures, positions, yadda yadda. 
+ * Class responsible to control vertical measures, positions, yadda yadda.
  * If the drawing is requested it will also take care of it.
  */
-public class YController extends AxisController{
-
+public class YController extends AxisController {
 
 
     public YController(ChartView chartView) {
         super(chartView);
-	}
-	
-	
-	public YController(ChartView chartView, TypedArray attrs) {
+    }
+
+
+    public YController(ChartView chartView, TypedArray attrs) {
         super(chartView, attrs);
-	}
+    }
 
 
-
-    void measure(){
+    void measure() {
 
         chartView.setInnerChartLeft(measureInnerChartLeft());
         chartView.setInnerChartBottom(measureInnerChartBottom());
@@ -54,13 +52,12 @@ public class YController extends AxisController{
      * IMPORTANT: Method's calls order is crucial. Change it (or not) carefully.
      */
     @Override
-	void dispose(){
+    void dispose() {
         super.dispose();
 
         defineMandatoryBorderSpacing(chartView.getInnerChartTop(), chartView.getChartBottom());
         defineLabelsPosition(chartView.getInnerChartTop(), chartView.getInnerChartBottom());
     }
-
 
 
     /**
@@ -69,15 +66,14 @@ public class YController extends AxisController{
      * @param value - Value to be parsed in display coordinate
      * @return Chart's coordinate
      */
-    float parsePos(int index, double value){
+    float parsePos(int index, double value) {
 
-        if(handleValues && labelsValues.size() > 1)
-            return (float) ( chartView.horController.axisPosition -
-                (((value - minLabelValue) * screenStep) / (labelsValues.get(1) - minLabelValue)));
+        if (handleValues && labelsValues.size() > 1)
+            return (float) (chartView.horController.axisPosition -
+                    (((value - minLabelValue) * screenStep) / (labelsValues.get(1) - minLabelValue)));
         else
             return labelsPos.get(index);
     }
-
 
 
     /**
@@ -87,11 +83,11 @@ public class YController extends AxisController{
      *
      * @return Coordinate of the inner left side of the chart
      */
-    public float measureInnerChartLeft(){
+    public float measureInnerChartLeft() {
 
         float result = 0;
-        if(hasAxis)
-            result += chartView.style.axisThickness/2;
+        if (hasAxis)
+            result += chartView.style.axisThickness / 2;
 
         result += chartView.getChartLeft();
 
@@ -117,46 +113,43 @@ public class YController extends AxisController{
      *
      * @return Coordinate of the inner bottom side of the chart
      */
-    public float measureInnerChartBottom(){
+    public float measureInnerChartBottom() {
 
-        if (labelsPositioning != LabelPosition.NONE && borderSpacing < getLabelsMaxHeight()/2)
-            return chartView.getChartBottom() - getLabelsMaxHeight()/2;
+        if (labelsPositioning != LabelPosition.NONE && borderSpacing < getLabelsMaxHeight() / 2)
+            return chartView.getChartBottom() - getLabelsMaxHeight() / 2;
         return chartView.getChartBottom();
     }
 
 
-
     /**
      * Get the horizontal position of axis based on the chart left bottom.
-     *
      */
     @Override
-    protected void defineAxisPosition(){
+    protected void defineAxisPosition() {
 
         axisPosition = chartView.getInnerChartLeft();
-        if(hasAxis)
-            axisPosition -= chartView.style.axisThickness/2;
+        if (hasAxis)
+            axisPosition -= chartView.style.axisThickness / 2;
     }
 
 
     /**
      * Get the horizontal position of labels based on the axis position.
-     *
      */
     @Override
-    protected void defineStaticLabelsPosition(){
+    protected void defineStaticLabelsPosition() {
 
         labelsStaticPos = axisPosition;
 
-        if(labelsPositioning == LabelPosition.INSIDE) {
+        if (labelsPositioning == LabelPosition.INSIDE) {
             labelsStaticPos += distLabelToAxis;
-            if(hasAxis)
-                labelsStaticPos +=  chartView.style.axisThickness/2;
+            if (hasAxis)
+                labelsStaticPos += chartView.style.axisThickness / 2;
 
-        }else if(labelsPositioning == LabelPosition.OUTSIDE) {
+        } else if (labelsPositioning == LabelPosition.OUTSIDE) {
             labelsStaticPos -= distLabelToAxis;
-            if(hasAxis)
-                labelsStaticPos -=  chartView.style.axisThickness/2;
+            if (hasAxis)
+                labelsStaticPos -= chartView.style.axisThickness / 2;
         }
     }
 
@@ -171,10 +164,10 @@ public class YController extends AxisController{
     /**
      * Get the height of a label.
      *
-     * @param text   Label to measure
-     * @return   height of label
+     * @param text Label to measure
+     * @return height of label
      */
-    private int getLabelHeight(String text){
+    private int getLabelHeight(String text) {
         final Rect rect = new Rect();
         chartView.style.labelsPaint.getTextBounds(text, 0, text.length(), rect);
         return rect.height();
@@ -182,9 +175,9 @@ public class YController extends AxisController{
 
 
     @Override
-	protected void draw(Canvas canvas){
-		
-		if(hasAxis) {
+    protected void draw(Canvas canvas) {
+
+        if (hasAxis) {
             // Draw axis line
             float bottom = chartView.horController.axisPosition;
             if (chartView.horController.hasAxis)
@@ -197,20 +190,20 @@ public class YController extends AxisController{
                     chartView.style.chartPaint);
         }
 
-		if(labelsPositioning != LabelPosition.NONE){
+        if (labelsPositioning != LabelPosition.NONE) {
 
             chartView.style.labelsPaint.setTextAlign(
                     (labelsPositioning == LabelPosition.OUTSIDE)
                             ? Align.RIGHT : Align.LEFT);
 
-			// Draw labels
-			for(int i = 0; i < nLabels; i++){
-				canvas.drawText(labels.get(i),
+            // Draw labels
+            for (int i = 0; i < nLabels; i++) {
+                canvas.drawText(labels.get(i),
                         labelsStaticPos,
-                        labelsPos.get(i) + getLabelHeight(labels.get(i))/2,
+                        labelsPos.get(i) + getLabelHeight(labels.get(i)) / 2,
                         chartView.style.labelsPaint);
-			}
-		}
-	}
-	
+            }
+        }
+    }
+
 }

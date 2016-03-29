@@ -18,7 +18,7 @@ package com.db.chart.view.animation.easing;
 
 public class QuintEase extends BaseEasingMethod {
 
-	public QuintEase() {
+    public QuintEase() {
         super();
     }
 

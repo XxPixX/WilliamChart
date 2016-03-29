@@ -30,7 +30,9 @@ public abstract class BaseEasingMethod {
 
 
     protected abstract float easeOut(float time);
+
     protected abstract float easeInOut(float time);
+
     protected abstract float easeIn(float time);
 
 
@@ -41,18 +43,18 @@ public abstract class BaseEasingMethod {
      * @param time - time normalized between 0 and 1
      * @return the next interpolation.
      */
-    public float next(float time){
+    public float next(float time) {
 
-        if(mState == BaseEasingMethod.ENTER)
+        if (mState == BaseEasingMethod.ENTER)
             return easeOut(time);
-        else if(mState == BaseEasingMethod.UPDATE)
+        else if (mState == BaseEasingMethod.UPDATE)
             return easeInOut(time);
-        else if(mState == BaseEasingMethod.EXIT)
+        else if (mState == BaseEasingMethod.EXIT)
             return easeIn(time);
         return 1;
     }
 
-    public int getState(){
+    public int getState() {
         return mState;
     }
 
@@ -62,7 +64,7 @@ public abstract class BaseEasingMethod {
      *
      * @param state
      */
-    public void setState(int state){
+    public void setState(int state) {
         mState = state;
     }
 

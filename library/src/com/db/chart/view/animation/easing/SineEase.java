@@ -24,7 +24,7 @@ public class SineEase extends BaseEasingMethod {
 
     @Override
     protected float easeOut(float time) {
-        return (float)Math.sin(time * (Math.PI/2));
+        return (float) Math.sin(time * (Math.PI / 2));
     }
 
     @Override

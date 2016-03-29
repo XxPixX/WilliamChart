@@ -32,5 +32,5 @@ public class LinearEase extends BaseEasingMethod {
     protected float easeIn(float time) {
         return time;
     }
-	
+
 }

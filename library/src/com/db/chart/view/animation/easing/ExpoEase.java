@@ -24,7 +24,7 @@ public class ExpoEase extends BaseEasingMethod {
 
     @Override
     protected float easeOut(float time) {
-        return (time == 1) ? 1 : ( -(float) Math.pow( 2, -10 * time) + 1);
+        return (time == 1) ? 1 : (-(float) Math.pow(2, -10 * time) + 1);
     }
 
     @Override
@@ -40,12 +40,12 @@ public class ExpoEase extends BaseEasingMethod {
         if (p < 1.f)
             return 0.5f * (float) Math.pow(2.f, 10.f * (p - 1.f));
 
-        return 0.5f * ( -(float) Math.pow(2.f, -10.f * --p) + 2.f);
+        return 0.5f * (-(float) Math.pow(2.f, -10.f * --p) + 2.f);
     }
 
     @Override
     protected float easeIn(float time) {
-        return (time == 0.f) ? 0.f : (float) Math.pow( 2, 10.f * (time - 1.f));
+        return (time == 0.f) ? 0.f : (float) Math.pow(2, 10.f * (time - 1.f));
     }
 
 }

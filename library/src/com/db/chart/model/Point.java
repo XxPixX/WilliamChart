@@ -27,28 +27,36 @@ import com.db.chart.Tools;
 /**
  * Data model that represents a point in {@link com.db.chart.view.LineChartView}
  */
-public class Point extends ChartEntry{
+public class Point extends ChartEntry {
 
     private static final String TAG = "chart.model.Point";
 
 
-    /** Defaults **/
+    /**
+     * Defaults
+     **/
     private static final int DEFAULT_COLOR = -16777216;
     private static final float DOTS_THICKNESS = 4;
     private static final float DOTS_RADIUS = 3;
 
 
-    /** Dot variables */
+    /**
+     * Dot variables
+     */
     private boolean mHasStroke;
     private float mStrokeThickness;
     private int mStrokeColor;
 
 
-    /** Radius */
+    /**
+     * Radius
+     */
     private float mRadius;
 
 
-    /** Dots drawable background */
+    /**
+     * Dots drawable background
+     */
     private Drawable mDrawable;
 
 
@@ -58,8 +66,8 @@ public class Point extends ChartEntry{
      * @param label
      * @param value
      */
-	public Point(String label, float value){
-		super(label, value);
+    public Point(String label, float value) {
+        super(label, value);
 
         isVisible = false;
 
@@ -70,7 +78,7 @@ public class Point extends ChartEntry{
         mStrokeColor = DEFAULT_COLOR;
 
         mDrawable = null;
-	}
+    }
 
 
     /**
@@ -85,7 +93,7 @@ public class Point extends ChartEntry{
 
 
     /*
-	 * --------
+     * --------
 	 * Getters
 	 * --------
 	 */
@@ -126,7 +134,7 @@ public class Point extends ChartEntry{
      *
      * @return {@link android.graphics.drawable.Drawable} to be displayed.
      */
-    public Drawable getDrawable(){
+    public Drawable getDrawable() {
         return mDrawable;
     }
 
@@ -142,12 +150,12 @@ public class Point extends ChartEntry{
     /**
      * Define specific radius to point.
      *
-     * @param radius   value of radius starting from 0.
+     * @param radius value of radius starting from 0.
      * @return {@link com.db.chart.model.Point} self-reference.
      */
-    public Point setRadius(@FloatRange(from=0.f) float radius){
+    public Point setRadius(@FloatRange(from = 0.f) float radius) {
 
-        if(radius < 0.f)
+        if (radius < 0.f)
             throw new IllegalArgumentException("Dot radius can't be < 0.");
 
         isVisible = true;
@@ -159,12 +167,12 @@ public class Point extends ChartEntry{
     /**
      * Define specific thickness to point's stroke.
      *
-     * @param thickness   Grid thickness. Can't be equal or less than 0
+     * @param thickness Grid thickness. Can't be equal or less than 0
      * @return {@link com.db.chart.model.Point} self-reference.
      */
-    public Point setStrokeThickness(@FloatRange(from=0.f) float thickness){
+    public Point setStrokeThickness(@FloatRange(from = 0.f) float thickness) {
 
-        if(thickness < 0)
+        if (thickness < 0)
             throw new IllegalArgumentException("Grid thickness < 0.");
 
         isVisible = true;
@@ -177,10 +185,10 @@ public class Point extends ChartEntry{
     /**
      * Define point's stroke color.
      *
-     * @param color   The color.
+     * @param color The color.
      * @return {@link com.db.chart.model.Point} self-reference.
      */
-    public Point setStrokeColor(@ColorInt int color){
+    public Point setStrokeColor(@ColorInt int color) {
 
         isVisible = true;
         mHasStroke = true;
@@ -192,12 +200,12 @@ public class Point extends ChartEntry{
     /**
      * Define a drawable to be drawn instead of the usual dot.
      *
-     * @param drawable   The drawable.
+     * @param drawable The drawable.
      * @return {@link com.db.chart.model.Point} self-reference.
      */
-    public Point setDrawable(@NonNull Drawable drawable){
+    public Point setDrawable(@NonNull Drawable drawable) {
 
-        if(drawable == null)
+        if (drawable == null)
             throw new IllegalArgumentException("Drawable argument can't be null.");
 
         isVisible = true;

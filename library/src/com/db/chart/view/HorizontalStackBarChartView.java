@@ -25,44 +25,42 @@ import android.util.AttributeSet;
 import com.db.chart.model.Bar;
 import com.db.chart.model.BarSet;
 import com.db.chart.model.ChartSet;
-import com.db.chart.view.BaseStackBarChartView;
 
 import java.util.ArrayList;
 
 /**
  * Implements an HorizontalStackBarChart chart extending {@link com.db.chart.view.BaseStackBarChartView}
  */
-public class HorizontalStackBarChartView extends BaseStackBarChartView{
+public class HorizontalStackBarChartView extends BaseStackBarChartView {
 
 
-	public HorizontalStackBarChartView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-
-        setOrientation(Orientation.HORIZONTAL);
-        setMandatoryBorderSpacing();
-	}
-
-
-	public HorizontalStackBarChartView(Context context) {
-		super(context);
+    public HorizontalStackBarChartView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
         setOrientation(Orientation.HORIZONTAL);
         setMandatoryBorderSpacing();
-	}
+    }
 
+
+    public HorizontalStackBarChartView(Context context) {
+        super(context);
+
+        setOrientation(Orientation.HORIZONTAL);
+        setMandatoryBorderSpacing();
+    }
 
 
     /**
      * Method responsible to draw bars with the parsed screen points.
      *
-     * @param canvas   The canvas to draw on
+     * @param canvas The canvas to draw on
      * @param data   {@link java.util.ArrayList} of {@link com.db.chart.model.ChartSet} to use
      */
-	@Override
-	public void onDrawChart(Canvas canvas, ArrayList<ChartSet> data) {
+    @Override
+    public void onDrawChart(Canvas canvas, ArrayList<ChartSet> data) {
 
-		float offset;
-		float currBottom;
+        float offset;
+        float currBottom;
 
         float negOffset;
         float negCurrBottom;
@@ -75,15 +73,15 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
         int topSetIndex;
         float cornersPatch;
         BarSet barSet;
-		Bar bar;
-		int dataSize = data.size();
-		int setSize = data.get(0).size();
+        Bar bar;
+        int dataSize = data.size();
+        int setSize = data.get(0).size();
         float zeroPosition = this.getZeroPosition();
 
-		for (int i = 0; i < setSize; i++) {
+        for (int i = 0; i < setSize; i++) {
 
-			// If bar needs background
-			if(style.hasBarBackground)
+            // If bar needs background
+            if (style.hasBarBackground)
                 drawBarBackground(canvas,
                         (int) this.getInnerChartLeft(),
                         (int) (data.get(0).getEntry(i).getY() - barWidth / 2),
@@ -91,43 +89,43 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                         (int) (data.get(0).getEntry(i).getY() + barWidth / 2));
 
 
-			// Vertical offset to keep drawing bars on top of the others
-			offset = 0;
+            // Vertical offset to keep drawing bars on top of the others
+            offset = 0;
             negOffset = 0;
 
-			// Bottom of the next bar to be drawn
-			currBottom = zeroPosition;
+            // Bottom of the next bar to be drawn
+            currBottom = zeroPosition;
             negCurrBottom = zeroPosition;
 
-			// Unfortunately necessary to discover which set is the bottom and top in case there
-			// are entries with value 0. To better understand check one of the methods.
-			bottomSetIndex = discoverBottomSet(i, data);
-			topSetIndex = discoverTopSet(i, data);
+            // Unfortunately necessary to discover which set is the bottom and top in case there
+            // are entries with value 0. To better understand check one of the methods.
+            bottomSetIndex = discoverBottomSet(i, data);
+            topSetIndex = discoverTopSet(i, data);
 
-			for(int j = 0; j < dataSize; j++){
+            for (int j = 0; j < dataSize; j++) {
 
-				barSet = (BarSet) data.get(j);
-				bar = (Bar) barSet.getEntry(i);
+                barSet = (BarSet) data.get(j);
+                bar = (Bar) barSet.getEntry(i);
 
                 barSize = Math.abs(zeroPosition - bar.getX());
 
-				// If:
-				// Bar not visible OR
-				// Bar value equal to 0 OR
+                // If:
+                // Bar not visible OR
+                // Bar value equal to 0 OR
                 // Size of bar < 2 (Due to the loss of precision)
                 // Then no need to draw
-				if(!barSet.isVisible() || bar.getValue() == 0 || barSize < 2)
-					continue;
+                if (!barSet.isVisible() || bar.getValue() == 0 || barSize < 2)
+                    continue;
 
-				style.barPaint.setColor(bar.getColor());
-                style.barPaint.setAlpha((int)(barSet.getAlpha() * 255));
+                style.barPaint.setColor(bar.getColor());
+                style.barPaint.setAlpha((int) (barSet.getAlpha() * 255));
                 applyShadow(style.barPaint, barSet.getAlpha(), bar);
 
                 y0 = (bar.getY() - barWidth / 2);
                 y1 = (bar.getY() + barWidth / 2);
 
 
-                if(bar.getValue() > 0) {
+                if (bar.getValue() > 0) {
 
                     x1 = zeroPosition + (barSize - offset);
 
@@ -138,8 +136,8 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                             // Patch top corners of bar
                             cornersPatch = (x1 - currBottom) / 2;
                             canvas.drawRect(new Rect((int) (x1 - cornersPatch), (int) y0,
-                                                        (int) x1, (int) y1),
-                                                style.barPaint);
+                                            (int) x1, (int) y1),
+                                    style.barPaint);
                         }
 
                     } else if (j == topSetIndex) {
@@ -147,13 +145,13 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                         // Patch bottom corners of bar
                         cornersPatch = (x1 - currBottom) / 2;
                         canvas.drawRect(new Rect((int) currBottom, (int) y0,
-                                                    (int) (currBottom + cornersPatch), (int) y1),
-                                            style.barPaint);
+                                        (int) (currBottom + cornersPatch), (int) y1),
+                                style.barPaint);
 
                     } else {// if(j != bottomSetIndex && j != topSetIndex){ // Middle sets
                         canvas.drawRect(new Rect((int) currBottom, (int) y0,
-                                                    (int) x1, (int) y1),
-                                            style.barPaint);
+                                        (int) x1, (int) y1),
+                                style.barPaint);
                     }
 
                     currBottom = x1;
@@ -164,7 +162,7 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                         offset -= barSize - 0;
 
 
-                }else{ // if(bar.getValue() < 0)
+                } else { // if(bar.getValue() < 0)
 
                     x1 = zeroPosition - (barSize + negOffset);
 
@@ -174,8 +172,8 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                             // Patch top corners of bar
                             cornersPatch = (negCurrBottom - x1) / 2;
                             canvas.drawRect(new Rect((int) (negCurrBottom - cornersPatch), (int) y0,
-                                                        (int) negCurrBottom, (int) y1),
-                                                style.barPaint);
+                                            (int) negCurrBottom, (int) y1),
+                                    style.barPaint);
                         }
 
                     } else if (j == topSetIndex) {
@@ -183,13 +181,13 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                         // Patch bottom corners of bar
                         cornersPatch = (negCurrBottom - x1) / 2;
                         canvas.drawRect(new Rect((int) x1, (int) y0,
-                                                    (int) (x1 + cornersPatch), (int) y1),
-                                            style.barPaint);
+                                        (int) (x1 + cornersPatch), (int) y1),
+                                style.barPaint);
 
                     } else {// if(j != bottomSetIndex && j != topSetIndex){ // Middle sets
                         canvas.drawRect(new Rect((int) x1, (int) y0,
-                                                    (int) negCurrBottom, (int) y1),
-                                            style.barPaint);
+                                        (int) negCurrBottom, (int) y1),
+                                style.barPaint);
                     }
 
                     negCurrBottom = x1;
@@ -199,52 +197,50 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                         negOffset += barSize;
 
                 }
-			}
-		}
-	}
-
+            }
+        }
+    }
 
 
     /**
      * (Optional) To be overridden in case the view needs to execute some code before
      * starting the drawing.
      *
-     * @param data   Array of {@link com.db.chart.model.ChartSet} to do the necessary preparation just before onDraw
+     * @param data Array of {@link com.db.chart.model.ChartSet} to do the necessary preparation just before onDraw
      */
-	@Override
-	public void onPreDrawChart(ArrayList<ChartSet> data){
-		
-		// Doing calculations here to avoid doing several times while drawing
-		// in case of animation
-		if(data.get(0).size() == 1)
+    @Override
+    public void onPreDrawChart(ArrayList<ChartSet> data) {
+
+        // Doing calculations here to avoid doing several times while drawing
+        // in case of animation
+        if (data.get(0).size() == 1)
             barWidth = (this.getInnerChartBottom() - this.getInnerChartTop()
                     - this.getBorderSpacing() * 2);
         else
-			calculateBarsWidth(-1, data.get(0).getEntry(1).getY(), data.get(0).getEntry(0).getY());
-	}
-
+            calculateBarsWidth(-1, data.get(0).getEntry(1).getY(), data.get(0).getEntry(0).getY());
+    }
 
 
     /**
      * (Optional) To be overridden in order for each chart to define its own clickable regions.
      * This way, classes extending ChartView will only define their clickable regions.
-     *
+     * <p/>
      * Important: the returned vector must match the order of the data passed
      * by the user. This ensures that onTouchEvent will return the correct index.
      *
-     * @param data   {@link java.util.ArrayList} of {@link com.db.chart.model.ChartSet}
+     * @param data {@link java.util.ArrayList} of {@link com.db.chart.model.ChartSet}
      *             to use while defining each region of a {@link com.db.chart.view.BarChartView}
-     * @return   {@link java.util.ArrayList} of {@link android.graphics.Region} with regions
-     *           where click will be detected
+     * @return {@link java.util.ArrayList} of {@link android.graphics.Region} with regions
+     * where click will be detected
      */
-	@Override
-	public ArrayList<ArrayList<Region>> defineRegions(ArrayList<ChartSet> data) {
+    @Override
+    public ArrayList<ArrayList<Region>> defineRegions(ArrayList<ChartSet> data) {
 
-		int dataSize = data.size();
-		int setSize = data.get(0).size();
-		ArrayList<ArrayList<Region>> result = new ArrayList<>(dataSize);
-		for(int i = 0; i < dataSize; i++)
-			result.add(new ArrayList<Region>(setSize));
+        int dataSize = data.size();
+        int setSize = data.get(0).size();
+        ArrayList<ArrayList<Region>> result = new ArrayList<>(dataSize);
+        for (int i = 0; i < dataSize; i++)
+            result.add(new ArrayList<Region>(setSize));
 
         float offset;
         float currBottom;
@@ -258,19 +254,19 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
         Bar bar;
         float zeroPosition = this.getZeroPosition();
 
-		for (int i = 0; i < setSize; i++) {
-			
-			// Vertical offset to keep drawing bars on top of the others
-			offset = 0;
+        for (int i = 0; i < setSize; i++) {
+
+            // Vertical offset to keep drawing bars on top of the others
+            offset = 0;
             negOffset = 0;
-			// Bottom of the next bar to be drawn
-			currBottom = zeroPosition;
+            // Bottom of the next bar to be drawn
+            currBottom = zeroPosition;
             negCurrBottom = zeroPosition;
-			
-			for(int j = 0; j < dataSize; j++){
-				
-				barSet = (BarSet) data.get(j);
-				bar = (Bar) barSet.getEntry(i);
+
+            for (int j = 0; j < dataSize; j++) {
+
+                barSet = (BarSet) data.get(j);
+                bar = (Bar) barSet.getEntry(i);
 
                 barSize = Math.abs(zeroPosition - bar.getX());
 
@@ -279,10 +275,10 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                 // Bar value equal to 0 OR
                 // Size of bar < 2 (Due to the loss of precision)
                 // Then no need to have region
-                if(!barSet.isVisible() || bar.getValue() == 0 || barSize < 2)
+                if (!barSet.isVisible() || bar.getValue() == 0 || barSize < 2)
                     continue;
 
-                if(bar.getValue() > 0) {
+                if (bar.getValue() > 0) {
 
                     x1 = zeroPosition + (barSize - offset);
                     result.get(j).add(new Region(
@@ -293,7 +289,7 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
 
                     currBottom = x1;
                     offset -= barSize - 2;
-                }else{
+                } else {
 
                     x1 = zeroPosition - (barSize + negOffset);
                     result.get(j).add(new Region(
@@ -305,10 +301,10 @@ public class HorizontalStackBarChartView extends BaseStackBarChartView{
                     negCurrBottom = x1;
                     negOffset += barSize;
                 }
-			}
-		}
-		
-		return result;
-	}
+            }
+        }
+
+        return result;
+    }
 
 }

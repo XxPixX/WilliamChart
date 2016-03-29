@@ -24,7 +24,7 @@ public class CircEase extends BaseEasingMethod {
 
     @Override
     protected float easeOut(float time) {
-        return 1 * (float) Math.sqrt( 1 - ( time = time - 1) * time);
+        return 1 * (float) Math.sqrt(1 - (time = time - 1) * time);
     }
 
     @Override

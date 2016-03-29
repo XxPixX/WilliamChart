@@ -24,91 +24,102 @@ import android.support.annotation.ColorInt;
  */
 public abstract class ChartEntry {
 
-    /** Default bar color */
+    /**
+     * Default bar color
+     */
     private static final int DEFAULT_COLOR = -16777216;
 
-	
-	/** Input from user */
-	final private String mLabel;
-	private float mValue;
 
-	
-	/** Display coordinates */
-	private float mX;
-	private float mY;
+    /**
+     * Input from user
+     */
+    final private String mLabel;
+    private float mValue;
 
 
-    /** Bar color */
+    /**
+     * Display coordinates
+     */
+    private float mX;
+    private float mY;
+
+
+    /**
+     * Bar color
+     */
     private int mColor;
 
 
-    /** Defines if entry is visible */
+    /**
+     * Defines if entry is visible
+     */
     boolean isVisible;
 
 
-	/** Shadow variables */
-	private float mShadowRadius;
-	private float mShadowDx;
-	private float mShadowDy;
-	private int[] mShadowColor;
+    /**
+     * Shadow variables
+     */
+    private float mShadowRadius;
+    private float mShadowDx;
+    private float mShadowDy;
+    private int[] mShadowColor;
 
 
-
-	/**
-	 * Constructor.
-	 *
-	 * @param label
-	 * @param value
-	 */
-	ChartEntry(String label, float value){
-		mLabel = label;
-		mValue = value;
+    /**
+     * Constructor.
+     *
+     * @param label
+     * @param value
+     */
+    ChartEntry(String label, float value) {
+        mLabel = label;
+        mValue = value;
 
         mColor = DEFAULT_COLOR;
 
-		mShadowRadius = 0;
-		mShadowDx = 0;
-		mShadowDy = 0;
-		mShadowColor = new int[4];
-	}
+        mShadowRadius = 0;
+        mShadowDx = 0;
+        mShadowDy = 0;
+        mShadowColor = new int[4];
+    }
 
 
-    public boolean isVisible(){
+    public boolean isVisible() {
         return isVisible;
     }
 
 
-	public boolean hasShadow(){
-		return mShadowRadius != 0;
-	}
+    public boolean hasShadow() {
+        return mShadowRadius != 0;
+    }
 
 
 
 	/*
-	 * --------
+     * --------
 	 * Getters
 	 * --------
 	 */
 
 
-	public String getLabel() {
-		return mLabel;
-	}
+    public String getLabel() {
+        return mLabel;
+    }
 
 
-	public float getValue() {
-		return mValue;
-	}
+    public float getValue() {
+        return mValue;
+    }
 
 
-	public float getX() {
-		return mX;
-	}
+    public float getX() {
+        return mX;
+    }
 
 
-	public float getY() {
-		return mY;
-	}
+    public float getY() {
+        return mY;
+    }
 
 
     public int getColor() {
@@ -116,21 +127,21 @@ public abstract class ChartEntry {
     }
 
 
-	public float getShadowRadius() {
-		return mShadowRadius;
-	}
+    public float getShadowRadius() {
+        return mShadowRadius;
+    }
 
-	public float getShadowDx() {
-		return mShadowDx;
-	}
+    public float getShadowDx() {
+        return mShadowDx;
+    }
 
-	public float getShadowDy() {
-		return mShadowDy;
-	}
+    public float getShadowDy() {
+        return mShadowDy;
+    }
 
-	public int[] getShadowColor() {
-		return mShadowColor;
-	}
+    public int[] getShadowColor() {
+        return mShadowColor;
+    }
 
 
 	
@@ -139,36 +150,36 @@ public abstract class ChartEntry {
 	 * Setters
 	 * --------
 	 */
-	
-	
-	/**
-	 * Set new entry value.
+
+
+    /**
+     * Set new entry value.
      *
-	 * @param value   New value
-	 */
-	public void setValue(float value){
-		mValue = value;
-	}
-	
-	
-	/**
-	 * Set the parsed display coordinates.
+     * @param value New value
+     */
+    public void setValue(float value) {
+        mValue = value;
+    }
+
+
+    /**
+     * Set the parsed display coordinates.
      *
-	 * @param x   display x coordinate.
-	 * @param y   display y coordinate.
-	 */
-	public void setCoordinates(float x, float y){
+     * @param x display x coordinate.
+     * @param y display y coordinate.
+     */
+    public void setCoordinates(float x, float y) {
 
-		mX = x;
-		mY = y;
-	}
+        mX = x;
+        mY = y;
+    }
 
 
-	/**
-	 * Define the color of the entry.
-	 *
-	 * @param color   Color to be set.
-	 */
+    /**
+     * Define the color of the entry.
+     *
+     * @param color Color to be set.
+     */
     public void setColor(@ColorInt int color) {
 
         isVisible = true;
@@ -176,40 +187,38 @@ public abstract class ChartEntry {
     }
 
 
-	/**
-	 * Define whether this entry will be drawn or not.
-	 *
-	 * @param visible   True if entry should be displayed.
-	 */
-	public void setVisible(boolean visible){
+    /**
+     * Define whether this entry will be drawn or not.
+     *
+     * @param visible True if entry should be displayed.
+     */
+    public void setVisible(boolean visible) {
 
-		isVisible = visible;
-	}
-
-
-	/**
-	 *
-	 * @param radius
-	 * @param dx
-	 * @param dy
-	 * @param color
-	 */
-	public void setShadow(float radius, float dx, float dy, @ColorInt int color) {
-
-		mShadowRadius = radius;
-		mShadowDx = dx;
-		mShadowDy = dy;
-		mShadowColor[0] = Color.alpha(color);
-		mShadowColor[1] = Color.red(color);
-		mShadowColor[2] = Color.blue(color);
-		mShadowColor[3] = Color.green(color);
-	}
+        isVisible = visible;
+    }
 
 
+    /**
+     * @param radius
+     * @param dx
+     * @param dy
+     * @param color
+     */
+    public void setShadow(float radius, float dx, float dy, @ColorInt int color) {
 
-	public String toString(){
-		return "Label="+mLabel+" \n" + "Value="+mValue+"\n" +
-				"X = "+mX+"\n" + "Y = "+mY;
-	}
+        mShadowRadius = radius;
+        mShadowDx = dx;
+        mShadowDy = dy;
+        mShadowColor[0] = Color.alpha(color);
+        mShadowColor[1] = Color.red(color);
+        mShadowColor[2] = Color.blue(color);
+        mShadowColor[3] = Color.green(color);
+    }
+
+
+    public String toString() {
+        return "Label=" + mLabel + " \n" + "Value=" + mValue + "\n" +
+                "X = " + mX + "\n" + "Y = " + mY;
+    }
 
 }

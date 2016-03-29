@@ -16,8 +16,6 @@
 
 package com.db.chart.view;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -30,6 +28,7 @@ import android.util.AttributeSet;
 import com.db.chart.model.ChartSet;
 import com.db.williamchart.R;
 
+import java.util.ArrayList;
 
 
 /**
@@ -38,44 +37,49 @@ import com.db.williamchart.R;
 public abstract class BaseBarChartView extends ChartView {
 
 
-	/** Offset to control bar positions. Added due to multiset charts. */
-	float drawingOffset;
+    /**
+     * Offset to control bar positions. Added due to multiset charts.
+     */
+    float drawingOffset;
 
 
-	/** Style applied to Graph */
-	final Style style;
+    /**
+     * Style applied to Graph
+     */
+    final Style style;
 
 
-	/** Bar width */
-	float barWidth;
+    /**
+     * Bar width
+     */
+    float barWidth;
 
 
+    public BaseBarChartView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-	public BaseBarChartView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+        style = new Style(context.getTheme()
+                .obtainStyledAttributes(attrs, R.styleable.ChartAttrs, 0, 0));
 
-		style = new Style(context.getTheme()
-				.obtainStyledAttributes(attrs, R.styleable.ChartAttrs, 0, 0));
-
-	}
+    }
 
 
-	public BaseBarChartView(Context context) {
-		super(context);
+    public BaseBarChartView(Context context) {
+        super(context);
 
-		style = new Style();
-	}
+        style = new Style();
+    }
 
     /**
      * Method responsible to draw bars with the parsed screen points.
      *
-     * @param canvas   The canvas to draw on.
+     * @param canvas The canvas to draw on.
      * @param data   {@link java.util.ArrayList} of {@link com.db.chart.model.ChartSet}
-     *             to use while drawing the Chart
+     *               to use while drawing the Chart
      */
-	@Override
-	protected void onDrawChart(Canvas canvas, ArrayList<ChartSet> data) {}
-
+    @Override
+    protected void onDrawChart(Canvas canvas, ArrayList<ChartSet> data) {
+    }
 
 
     /**
@@ -89,11 +93,10 @@ public abstract class BaseBarChartView extends ChartView {
      */
     void drawBar(Canvas canvas, float left, float top, float right, float bottom) {
 
-        canvas.drawRoundRect(new RectF((int)left, (int)top, (int)right, (int)bottom),
+        canvas.drawRoundRect(new RectF((int) left, (int) top, (int) right, (int) bottom),
                 style.cornerRadius, style.cornerRadius,
                 style.barPaint);
     }
-
 
 
     /**
@@ -107,97 +110,95 @@ public abstract class BaseBarChartView extends ChartView {
      */
     void drawBarBackground(Canvas canvas, float left, float top, float right, float bottom) {
 
-        canvas.drawRoundRect(new RectF((int)left, (int)top, (int)right, (int)bottom),
+        canvas.drawRoundRect(new RectF((int) left, (int) top, (int) right, (int) bottom),
                 style.cornerRadius, style.cornerRadius,
                 style.barBackgroundPaint);
     }
 
 
-
     /**
      * Calculates Bar width based on the distance of two horizontal labels.
      *
-     * @param nSets  Number of sets
-     * @param x0     Coordinate(n)
-     * @param x1     Coordinate(n+1)
+     * @param nSets Number of sets
+     * @param x0    Coordinate(n)
+     * @param x1    Coordinate(n+1)
      */
-	void calculateBarsWidth(int nSets, float x0, float x1) {
-		barWidth = ((x1 - x0) - style.barSpacing/2 - style.setSpacing * (nSets - 1)) / nSets;
-	}
+    void calculateBarsWidth(int nSets, float x0, float x1) {
+        barWidth = ((x1 - x0) - style.barSpacing / 2 - style.setSpacing * (nSets - 1)) / nSets;
+    }
 
 
-
-	/**
-	 * Having calculated previously the barWidth gives the offset to know
-	 * where to start drawing the first bar of each group.
+    /**
+     * Having calculated previously the barWidth gives the offset to know
+     * where to start drawing the first bar of each group.
      *
-	 * @param size   Size of sets
-	 */
-	void calculatePositionOffset(int size){
+     * @param size Size of sets
+     */
+    void calculatePositionOffset(int size) {
 
-		if(size % 2 == 0)
-			drawingOffset = size * barWidth/2 + (size - 1) * (style.setSpacing / 2);
-		else
-			drawingOffset = size * barWidth/2 + ((size - 1) / 2) * style.setSpacing;
-	}
+        if (size % 2 == 0)
+            drawingOffset = size * barWidth / 2 + (size - 1) * (style.setSpacing / 2);
+        else
+            drawingOffset = size * barWidth / 2 + ((size - 1) / 2) * style.setSpacing;
+    }
 
 
-	@Override
-    public void reset(){
+    @Override
+    public void reset() {
         super.reset();
         setMandatoryBorderSpacing();
     }
 
 	
     /*
-	 * --------
+     * --------
 	 * Setters
 	 * --------
 	 */
 
 
-	/**
-	 * Define the space to use between bars.
+    /**
+     * Define the space to use between bars.
      *
-	 * @param spacing   Spacing between {@link com.db.chart.model.Bar}
-	 */
-	public void setBarSpacing(float spacing){
-		style.barSpacing = spacing;
-	}
+     * @param spacing Spacing between {@link com.db.chart.model.Bar}
+     */
+    public void setBarSpacing(float spacing) {
+        style.barSpacing = spacing;
+    }
 
 
-	/**
-	 * When multiset, it defines the space to use set.
+    /**
+     * When multiset, it defines the space to use set.
      *
-	 * @param spacing   Spacing between {@link com.db.chart.model.BarSet}
-	 */
-	public void setSetSpacing(float spacing){
-		style.setSpacing = spacing;
-	}
+     * @param spacing Spacing between {@link com.db.chart.model.BarSet}
+     */
+    public void setSetSpacing(float spacing) {
+        style.setSpacing = spacing;
+    }
 
 
-	/**
-	 * Color to use in bars background.
+    /**
+     * Color to use in bars background.
      *
-	 * @param color   Color of background in case setBarBackground has been set to True
-	 */
-	public void setBarBackgroundColor(@ColorInt int color){
+     * @param color Color of background in case setBarBackground has been set to True
+     */
+    public void setBarBackgroundColor(@ColorInt int color) {
 
         style.hasBarBackground = true;
-		style.mBarBackgroundColor = color;
-        if(style.barBackgroundPaint != null)
+        style.mBarBackgroundColor = color;
+        if (style.barBackgroundPaint != null)
             style.barBackgroundPaint.setColor(style.mBarBackgroundColor);
-	}
+    }
 
 
-	/**
-	 * Round corners of bars.
+    /**
+     * Round corners of bars.
      *
-	 * @param radius   Radius applied to the corners of {@link com.db.chart.model.Bar}
-	 */
-	public void setRoundCorners(@FloatRange(from=0.f) float radius){
-		style.cornerRadius = radius;
-	}
+     * @param radius Radius applied to the corners of {@link com.db.chart.model.Bar}
+     */
+    public void setRoundCorners(@FloatRange(from = 0.f) float radius) {
+        style.cornerRadius = radius;
+    }
 
 
 
@@ -207,64 +208,72 @@ public abstract class BaseBarChartView extends ChartView {
 	 * ----------
 	 */
 
-	public class Style{
+    public class Style {
 
 
-		private static final int DEFAULT_COLOR = -16777216;
+        private static final int DEFAULT_COLOR = -16777216;
 
 
-		/** Bars fill variables */
-		Paint barPaint;
+        /**
+         * Bars fill variables
+         */
+        Paint barPaint;
 
 
-		/** Spacing between bars */
-		float barSpacing;
-		float setSpacing;
+        /**
+         * Spacing between bars
+         */
+        float barSpacing;
+        float setSpacing;
 
 
-        /** Bar background variables */
+        /**
+         * Bar background variables
+         */
         Paint barBackgroundPaint;
         private int mBarBackgroundColor;
         boolean hasBarBackground;
 
 
-		/** Radius to round corners **/
-		float cornerRadius;
+        /**
+         * Radius to round corners
+         **/
+        float cornerRadius;
 
 
-	    Style() {
+        Style() {
 
-	    	mBarBackgroundColor = DEFAULT_COLOR;
-	    	hasBarBackground = false;
+            mBarBackgroundColor = DEFAULT_COLOR;
+            hasBarBackground = false;
 
-	    	barSpacing = getResources().getDimension(R.dimen.bar_spacing);
-	    	setSpacing = getResources().getDimension(R.dimen.set_spacing);
+            barSpacing = getResources().getDimension(R.dimen.bar_spacing);
+            setSpacing = getResources().getDimension(R.dimen.set_spacing);
 
-			init();
-	    }
+            init();
+        }
 
 
-	    Style(TypedArray attrs) {
+        Style(TypedArray attrs) {
 
-	    	mBarBackgroundColor = DEFAULT_COLOR;
-	    	hasBarBackground = false;
+            mBarBackgroundColor = DEFAULT_COLOR;
+            hasBarBackground = false;
 
-	    	barSpacing = attrs.getDimension( R.styleable.BarChartAttrs_chart_barSpacing,
-	    				getResources().getDimension(R.dimen.bar_spacing));
-	    	setSpacing = attrs.getDimension(R.styleable.BarChartAttrs_chart_barSpacing,
-	    				getResources().getDimension(R.dimen.set_spacing));
+            barSpacing = attrs.getDimension(R.styleable.BarChartAttrs_chart_barSpacing,
+                    getResources().getDimension(R.dimen.bar_spacing));
+            setSpacing = attrs.getDimension(R.styleable.BarChartAttrs_chart_barSpacing,
+                    getResources().getDimension(R.dimen.set_spacing));
 
-			init();
-	    }
+            init();
+        }
 
-		private void init(){
+        private void init() {
 
-	    	barPaint = new Paint();
-	    	barPaint.setStyle(Paint.Style.FILL);
+            barPaint = new Paint();
+            barPaint.setStyle(Paint.Style.FILL);
 
-	    	barBackgroundPaint = new Paint();
-	    	barBackgroundPaint.setColor(mBarBackgroundColor);
-	    	barBackgroundPaint.setStyle(Paint.Style.FILL);
-	    }
-	}
+            barBackgroundPaint = new Paint();
+            barBackgroundPaint.setColor(mBarBackgroundColor);
+            barBackgroundPaint.setStyle(Paint.Style.FILL);
+        }
+    }
 }

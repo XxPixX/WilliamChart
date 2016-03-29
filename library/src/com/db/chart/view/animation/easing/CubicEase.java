@@ -24,7 +24,7 @@ public class CubicEase extends BaseEasingMethod {
 
     @Override
     protected float easeOut(float time) {
-        return (float) Math.pow( time - 1, 3) + 1;
+        return (float) Math.pow(time - 1, 3) + 1;
     }
 
     @Override

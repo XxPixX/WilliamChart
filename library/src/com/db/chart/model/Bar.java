@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 /**
  * Data model that represents a bar in {@link com.db.chart.view.BaseBarChartView}
  */
-public class Bar extends ChartEntry{
+public class Bar extends ChartEntry {
 
     private static final String TAG = "chart.model.Bar";
 
@@ -37,12 +37,12 @@ public class Bar extends ChartEntry{
      * @param label
      * @param value
      */
-    public Bar(String label, float value){
-		super(label, value);
+    public Bar(String label, float value) {
+        super(label, value);
 
         isVisible = true;
         mHasGradientColor = false;
-	}
+    }
 
 
     /**
@@ -50,13 +50,13 @@ public class Bar extends ChartEntry{
      *
      * @return true if gradient fill property defined.
      */
-    public boolean hasGradientColor(){
+    public boolean hasGradientColor() {
         return mHasGradientColor;
     }
 
 
     /*
-	 * -------------
+     * -------------
 	 * Getters
 	 * -------------
 	 */
@@ -67,7 +67,7 @@ public class Bar extends ChartEntry{
      *
      * @return Gradient colors array.
      */
-    public int[] getGradientColors(){
+    public int[] getGradientColors() {
         return mGradientColors;
     }
 
@@ -78,7 +78,7 @@ public class Bar extends ChartEntry{
      *
      * @return Gradient positions.
      */
-    public float[] getGradientPositions(){
+    public float[] getGradientPositions() {
         return mGradientPositions;
     }
 
@@ -92,13 +92,13 @@ public class Bar extends ChartEntry{
     /**
      * Set gradient colors to the fill of the {@link com.db.chart.model.Bar}.
      *
-     * @param colors   The colors to be distributed among gradient
-     * @param positions   Position/order from which the colors will be place
+     * @param colors    The colors to be distributed among gradient
+     * @param positions Position/order from which the colors will be place
      * @return {@link com.db.chart.model.Bar} self-reference.
      */
-    public Bar setGradientColor(@NonNull int colors[], float[] positions){
+    public Bar setGradientColor(@NonNull int colors[], float[] positions) {
 
-        if(colors == null || colors.length == 0)
+        if (colors == null || colors.length == 0)
             throw new IllegalArgumentException("Colors argument can't be null or empty.");
 
         mHasGradientColor = true;
@@ -106,5 +106,5 @@ public class Bar extends ChartEntry{
         mGradientPositions = positions;
         return this;
     }
-	
+
 }

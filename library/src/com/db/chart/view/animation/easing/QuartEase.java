@@ -18,13 +18,13 @@ package com.db.chart.view.animation.easing;
 
 public class QuartEase extends BaseEasingMethod {
 
-	public QuartEase() {
+    public QuartEase() {
         super();
     }
 
     @Override
     protected float easeOut(float time) {
-        return (float) -(Math.pow( time - 1, 4) - 1);
+        return (float) -(Math.pow(time - 1, 4) - 1);
     }
 
     @Override

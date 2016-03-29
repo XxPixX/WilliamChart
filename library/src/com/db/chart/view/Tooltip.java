@@ -35,7 +35,7 @@ import java.text.DecimalFormat;
 /**
  * Class representing chart's tooltips. It works basically as a wrapper.
  */
-public class Tooltip extends RelativeLayout{
+public class Tooltip extends RelativeLayout {
 
 
     public enum Alignment {
@@ -79,8 +79,7 @@ public class Tooltip extends RelativeLayout{
     private DecimalFormat mValueFormat;
 
 
-
-    public Tooltip(Context context){
+    public Tooltip(Context context) {
         super(context);
         init();
     }
@@ -105,7 +104,7 @@ public class Tooltip extends RelativeLayout{
     }
 
 
-    private void init(){
+    private void init() {
 
         mWidth = -1;
         mHeight = -1;
@@ -118,46 +117,45 @@ public class Tooltip extends RelativeLayout{
     }
 
 
-
     /**
      * Method called by ChartView before displaying the
      * tooltip in order to set its layout parameters.
      *
-     * @param rect   {@link Rect} covering the are of the
-     *                clicked {@link com.db.chart.model.ChartEntry}.
-     * @param value   Value of the entry.
+     * @param rect  {@link Rect} covering the are of the
+     *              clicked {@link com.db.chart.model.ChartEntry}.
+     * @param value Value of the entry.
      */
-    public void prepare(Rect rect, float value){
+    public void prepare(Rect rect, float value) {
 
         // If no previous dimensions defined, the size of the area of the entry will be used.
-        int width = (mWidth == -1) ? rect.width() : mWidth ;
-        int height = (mHeight == -1) ? rect.height() : mHeight ;
+        int width = (mWidth == -1) ? rect.width() : mWidth;
+        int height = (mHeight == -1) ? rect.height() : mHeight;
 
         RelativeLayout.LayoutParams layoutParams =
                 new RelativeLayout.LayoutParams(width, height);
 
         // Adjust left coordinate of the tooltip based on the Alignment defined
-        if(mHorizontalAlignment == Alignment.RIGHT_LEFT)
+        if (mHorizontalAlignment == Alignment.RIGHT_LEFT)
             layoutParams.leftMargin = rect.left - width - mRightMargin;
-        if(mHorizontalAlignment == Alignment.LEFT_LEFT)
+        if (mHorizontalAlignment == Alignment.LEFT_LEFT)
             layoutParams.leftMargin = rect.left + mLeftMargin;
-        if(mHorizontalAlignment == Alignment.CENTER)
-            layoutParams.leftMargin = rect.centerX() - width/2;
-        if(mHorizontalAlignment == Alignment.RIGHT_RIGHT)
+        if (mHorizontalAlignment == Alignment.CENTER)
+            layoutParams.leftMargin = rect.centerX() - width / 2;
+        if (mHorizontalAlignment == Alignment.RIGHT_RIGHT)
             layoutParams.leftMargin = rect.right - width - mRightMargin;
-        if(mHorizontalAlignment == Alignment.LEFT_RIGHT)
+        if (mHorizontalAlignment == Alignment.LEFT_RIGHT)
             layoutParams.leftMargin = rect.right + mLeftMargin;
 
         // Adjust top coordinate of tooltip based on the Alignment defined
-        if(mVerticalAlignment == Alignment.BOTTOM_TOP)
+        if (mVerticalAlignment == Alignment.BOTTOM_TOP)
             layoutParams.topMargin = rect.top - height - mBottomMargin;
-        else if(mVerticalAlignment == Alignment.TOP_TOP)
+        else if (mVerticalAlignment == Alignment.TOP_TOP)
             layoutParams.topMargin = rect.top + mTopMargin;
-        else if(mVerticalAlignment == Alignment.CENTER)
-            layoutParams.topMargin = rect.centerY() - height/2;
+        else if (mVerticalAlignment == Alignment.CENTER)
+            layoutParams.topMargin = rect.centerY() - height / 2;
         else if (mVerticalAlignment == Alignment.BOTTOM_BOTTOM)
             layoutParams.topMargin = rect.bottom - height - mBottomMargin;
-        else if(mVerticalAlignment == Alignment.TOP_BOTTOM)
+        else if (mVerticalAlignment == Alignment.TOP_BOTTOM)
             layoutParams.topMargin = rect.bottom + mTopMargin;
 
         setLayoutParams(layoutParams);
@@ -167,17 +165,16 @@ public class Tooltip extends RelativeLayout{
     }
 
 
-
     /**
      * Corrects the position of a tooltip and forces it to
      * be within {@link com.db.chart.view.ChartView}.
      *
-     * @param left    left coordinate of {@link com.db.chart.view.ChartView}
+     * @param left   left coordinate of {@link com.db.chart.view.ChartView}
      * @param top    top coordinate of {@link com.db.chart.view.ChartView}
-     * @param right    right coordinate of {@link com.db.chart.view.ChartView}
-     * @param bottom    bottom coordinate of {@link com.db.chart.view.ChartView}
+     * @param right  right coordinate of {@link com.db.chart.view.ChartView}
+     * @param bottom bottom coordinate of {@link com.db.chart.view.ChartView}
      */
-    void correctPosition(int left, int top, int right, int bottom){
+    void correctPosition(int left, int top, int right, int bottom) {
 
         final LayoutParams layoutParams = (LayoutParams) getLayoutParams();
 
@@ -193,13 +190,11 @@ public class Tooltip extends RelativeLayout{
     }
 
 
-
     /**
      * Starts enter animation.
-     *
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    void animateEnter(){
+    void animateEnter() {
         mEnterAnimator.start();
     }
 
@@ -207,26 +202,31 @@ public class Tooltip extends RelativeLayout{
     /**
      * Start exit animation.
      *
-     * @param endAction   Action to be executed at the end of the animation.
+     * @param endAction Action to be executed at the end of the animation.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    void animateExit(final Runnable endAction){
+    void animateExit(final Runnable endAction) {
 
         mExitAnimator.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) {}
+            public void onAnimationStart(Animator animation) {
+            }
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 endAction.run();
             }
+
             @Override
-            public void onAnimationCancel(Animator animation) {}
+            public void onAnimationCancel(Animator animation) {
+            }
+
             @Override
-            public void onAnimationRepeat(Animator animation) {}
+            public void onAnimationRepeat(Animator animation) {
+            }
         });
         mExitAnimator.start();
     }
-
 
 
     /**
@@ -234,7 +234,7 @@ public class Tooltip extends RelativeLayout{
      *
      * @return true if {@link com.db.chart.view.Tooltip} has enter animation defined.
      */
-    boolean hasEnterAnimation(){
+    boolean hasEnterAnimation() {
         return mEnterAnimator != null;
     }
 
@@ -244,7 +244,7 @@ public class Tooltip extends RelativeLayout{
      *
      * @return true if {@link com.db.chart.view.Tooltip} has exit animation define.
      */
-    boolean hasExitAnimation(){
+    boolean hasExitAnimation() {
         return mExitAnimator != null;
     }
 
@@ -254,10 +254,9 @@ public class Tooltip extends RelativeLayout{
      *
      * @return true if {@link com.db.chart.view.Tooltip} is currently displayed.
      */
-    boolean on(){
+    boolean on() {
         return mOn;
     }
-
 
 
     /**
@@ -265,10 +264,10 @@ public class Tooltip extends RelativeLayout{
      * Ex. Alignment.LEFT_RIGHT means that the left side of the tooltip
      * will be aligned with the right side of the entry.
      *
-     * @param alignment    horizontal alignment wrt entry's position.
+     * @param alignment horizontal alignment wrt entry's position.
      * @return {@link com.db.chart.view.Tooltip} self-reference.
      */
-    public Tooltip setHorizontalAlignment(Alignment alignment){
+    public Tooltip setHorizontalAlignment(Alignment alignment) {
         mHorizontalAlignment = alignment;
         return this;
     }
@@ -279,10 +278,10 @@ public class Tooltip extends RelativeLayout{
      * Ex. Alignment.TOP_TOP means that the top side of the tooltip
      * will be aligned with the top side of the entry.
      *
-     * @param alignment    vertical alignment wrt entry's position.
+     * @param alignment vertical alignment wrt entry's position.
      * @return {@link com.db.chart.view.Tooltip} self-reference.
      */
-    public Tooltip setVerticalAlignment(Alignment alignment){
+    public Tooltip setVerticalAlignment(Alignment alignment) {
         mVerticalAlignment = alignment;
         return this;
     }
@@ -291,11 +290,11 @@ public class Tooltip extends RelativeLayout{
     /**
      * Set the dimensions of the tooltip.
      *
-     * @param width    width dimension
-     * @param height    height dimension
+     * @param width  width dimension
+     * @param height height dimension
      * @return {@link com.db.chart.view.Tooltip} self-reference.
      */
-    public Tooltip setDimensions(int width, int height){
+    public Tooltip setDimensions(int width, int height) {
 
         mWidth = width;
         mHeight = height;
@@ -306,13 +305,13 @@ public class Tooltip extends RelativeLayout{
     /**
      * Set the margins of the tooltip wrt entry.
      *
-     * @param left    left margin dimension.
+     * @param left   left margin dimension.
      * @param top    top margin dimension.
-     * @param right    right margin dimension.
-     * @param bottom    bottom margin dimension.
+     * @param right  right margin dimension.
+     * @param bottom bottom margin dimension.
      * @return {@link com.db.chart.view.Tooltip} self-reference.
      */
-    public Tooltip setMargins(int left, int top, int right, int bottom){
+    public Tooltip setMargins(int left, int top, int right, int bottom) {
 
         mLeftMargin = left;
         mTopMargin = top;
@@ -325,9 +324,9 @@ public class Tooltip extends RelativeLayout{
     /**
      * If the tooltip is being displayed.
      *
-     * @param on   True if displayed, False if not.
+     * @param on True if displayed, False if not.
      */
-    void setOn(boolean on){
+    void setOn(boolean on) {
         mOn = on;
     }
 
@@ -335,10 +334,10 @@ public class Tooltip extends RelativeLayout{
     /**
      * Set the format to be applied to tooltip's value.
      *
-     * @param format   value format to be used once the tooltip is displayed.
+     * @param format value format to be used once the tooltip is displayed.
      * @return {@link com.db.chart.view.Tooltip} self-reference.
      */
-    public Tooltip setValueFormat(DecimalFormat format){
+    public Tooltip setValueFormat(DecimalFormat format) {
 
         mValueFormat = format;
         return this;
@@ -346,43 +345,41 @@ public class Tooltip extends RelativeLayout{
 
 
     /**
-     *
      * @param values
      * @return
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public ObjectAnimator setEnterAnimation(PropertyValuesHolder... values){
+    public ObjectAnimator setEnterAnimation(PropertyValuesHolder... values) {
 
-        for(PropertyValuesHolder value: values){
+        for (PropertyValuesHolder value : values) {
 
-            if(value.getPropertyName().equals("alpha"))
+            if (value.getPropertyName().equals("alpha"))
                 setAlpha(0);
-            if(value.getPropertyName().equals("rotation"))
+            if (value.getPropertyName().equals("rotation"))
                 setRotation(0);
-            if(value.getPropertyName().equals("rotationX"))
+            if (value.getPropertyName().equals("rotationX"))
                 setRotationX(0);
-            if(value.getPropertyName().equals("rotationY"))
+            if (value.getPropertyName().equals("rotationY"))
                 setRotationY(0);
-            if(value.getPropertyName().equals("translationX"))
+            if (value.getPropertyName().equals("translationX"))
                 setTranslationX(0);
-            if(value.getPropertyName().equals("translationY"))
+            if (value.getPropertyName().equals("translationY"))
                 setTranslationY(0);
-            if(value.getPropertyName().equals("scaleX"))
+            if (value.getPropertyName().equals("scaleX"))
                 setScaleX(0);
-            if(value.getPropertyName().equals("scaleY"))
+            if (value.getPropertyName().equals("scaleY"))
                 setScaleY(0);
         }
-        return mEnterAnimator =  ObjectAnimator.ofPropertyValuesHolder(this, values);
+        return mEnterAnimator = ObjectAnimator.ofPropertyValuesHolder(this, values);
     }
 
 
     /**
-     *
      * @param values
      * @return
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public ObjectAnimator setExitAnimation(PropertyValuesHolder... values){
+    public ObjectAnimator setExitAnimation(PropertyValuesHolder... values) {
         return mExitAnimator = ObjectAnimator.ofPropertyValuesHolder(this, values);
     }
 
