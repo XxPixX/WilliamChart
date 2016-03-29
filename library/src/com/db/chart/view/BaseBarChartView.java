@@ -65,23 +65,6 @@ public abstract class BaseBarChartView extends ChartView {
 
 		style = new Style();
 	}
-	
-	
-	
-	@Override
-	public void onAttachedToWindow(){
-		super.onAttachedToWindow();
-		style.init();
-	}
-	
-	
-	@Override
-	public void onDetachedFromWindow(){
-		super.onDetachedFromWindow();
-		style.clean();
-	}
-
-
 
     /**
      * Method responsible to draw bars with the parsed screen points.
@@ -142,23 +125,23 @@ public abstract class BaseBarChartView extends ChartView {
 		barWidth = ((x1 - x0) - style.barSpacing/2 - style.setSpacing * (nSets - 1)) / nSets;
 	}
 
-	
+
 
 	/**
-	 * Having calculated previously the barWidth gives the offset to know 
+	 * Having calculated previously the barWidth gives the offset to know
 	 * where to start drawing the first bar of each group.
      *
 	 * @param size   Size of sets
 	 */
 	void calculatePositionOffset(int size){
-		
+
 		if(size % 2 == 0)
 			drawingOffset = size * barWidth/2 + (size - 1) * (style.setSpacing / 2);
 		else
 			drawingOffset = size * barWidth/2 + ((size - 1) / 2) * style.setSpacing;
 	}
-	
-	
+
+
 	@Override
     public void reset(){
         super.reset();
@@ -171,8 +154,8 @@ public abstract class BaseBarChartView extends ChartView {
 	 * Setters
 	 * --------
 	 */
-	
-	
+
+
 	/**
 	 * Define the space to use between bars.
      *
@@ -181,8 +164,8 @@ public abstract class BaseBarChartView extends ChartView {
 	public void setBarSpacing(float spacing){
 		style.barSpacing = spacing;
 	}
-	
-	
+
+
 	/**
 	 * When multiset, it defines the space to use set.
      *
@@ -191,8 +174,8 @@ public abstract class BaseBarChartView extends ChartView {
 	public void setSetSpacing(float spacing){
 		style.setSpacing = spacing;
 	}
-	
-	
+
+
 	/**
 	 * Color to use in bars background.
      *
@@ -205,8 +188,8 @@ public abstract class BaseBarChartView extends ChartView {
         if(style.barBackgroundPaint != null)
             style.barBackgroundPaint.setColor(style.mBarBackgroundColor);
 	}
-	
-	
+
+
 	/**
 	 * Round corners of bars.
      *
@@ -225,15 +208,15 @@ public abstract class BaseBarChartView extends ChartView {
 	 */
 
 	public class Style{
-		
-		
+
+
 		private static final int DEFAULT_COLOR = -16777216;
-		
-		
+
+
 		/** Bars fill variables */
 		Paint barPaint;
-		
-		
+
+
 		/** Spacing between bars */
 		float barSpacing;
 		float setSpacing;
@@ -248,47 +231,40 @@ public abstract class BaseBarChartView extends ChartView {
 		/** Radius to round corners **/
 		float cornerRadius;
 
-		
+
 	    Style() {
-	    	
+
 	    	mBarBackgroundColor = DEFAULT_COLOR;
 	    	hasBarBackground = false;
-	    	
+
 	    	barSpacing = getResources().getDimension(R.dimen.bar_spacing);
 	    	setSpacing = getResources().getDimension(R.dimen.set_spacing);
+
+			init();
 	    }
-	    
-	    
+
+
 	    Style(TypedArray attrs) {
-	    	
+
 	    	mBarBackgroundColor = DEFAULT_COLOR;
 	    	hasBarBackground = false;
-	    	
+
 	    	barSpacing = attrs.getDimension( R.styleable.BarChartAttrs_chart_barSpacing,
 	    				getResources().getDimension(R.dimen.bar_spacing));
 	    	setSpacing = attrs.getDimension(R.styleable.BarChartAttrs_chart_barSpacing,
 	    				getResources().getDimension(R.dimen.set_spacing));
-	    }	
-	    
-	    
-	    
+
+			init();
+	    }
+
 		private void init(){
-			
+
 	    	barPaint = new Paint();
 	    	barPaint.setStyle(Paint.Style.FILL);
-	    	
+
 	    	barBackgroundPaint = new Paint();
 	    	barBackgroundPaint.setColor(mBarBackgroundColor);
 	    	barBackgroundPaint.setStyle(Paint.Style.FILL);
 	    }
-
-		
-	    private void clean(){
-	    	
-	    	barPaint = null;
-	    	barBackgroundPaint = null;
-	    }
-
 	}
-
 }

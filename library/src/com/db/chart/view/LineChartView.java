@@ -43,8 +43,8 @@ import android.graphics.Shader;
  * Implements a line chart extending {@link ChartView}
  */
 public class LineChartView extends ChartView {
-	
-	
+
+
 	/** Radius clickable region */
 	private float mClickableRadius;
 
@@ -52,8 +52,8 @@ public class LineChartView extends ChartView {
 	/** Style applied to line chart */
 	final private Style mStyle;
 
-	
-	
+
+
 	public LineChartView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
@@ -71,18 +71,6 @@ public class LineChartView extends ChartView {
         mClickableRadius = getResources().getDimension(R.dimen.dot_region_radius);
 	}
 
-	@Override
-	public void onAttachedToWindow(){
-		super.onAttachedToWindow();
-		mStyle.init();
-	}
-
-	@Override
-	public void onDetachedFromWindow(){
-		super.onDetachedFromWindow();
-		mStyle.clean();
-	}
-
 	/**
 	 * Method responsible to draw a line with the parsed screen points.
      *
@@ -90,31 +78,31 @@ public class LineChartView extends ChartView {
 	 */
 	@Override
 	public void onDrawChart(Canvas canvas, ArrayList<ChartSet> data) {
-		
+
 		LineSet lineSet;
-		
+
 		for(ChartSet set : data){
 
 			lineSet = (LineSet) set;
 
 			if(lineSet.isVisible()){
-				
+
 				mStyle.mLinePaint.setColor(lineSet.getColor());
 				mStyle.mLinePaint.setStrokeWidth(lineSet.getThickness());
 				applyShadow(mStyle.mLinePaint, lineSet);
-				
+
 				if(lineSet.isDashed())
 					mStyle.mLinePaint
 						.setPathEffect(new DashPathEffect(lineSet.getDashedIntervals(), lineSet.getDashedPhase()));
 				else
 					mStyle.mLinePaint.setPathEffect(null);
-				
+
 				//Draw line
 				if (!lineSet.isSmooth())
 					drawLine(canvas, lineSet);
 				else
 					drawSmoothLine(canvas, lineSet);
-				
+
 				//Draw points
 				drawPoints(canvas, lineSet);
 			}
@@ -188,14 +176,14 @@ public class LineChartView extends ChartView {
 		float x;
 		float y;
 		for (int i = begin; i < end; i++) {
-			
+
 			x = set.getEntry(i).getX();
 			y = set.getEntry(i).getY();
-			
+
 			// Get minimum display Y to optimize gradient
-			if (y < minY) 
+			if (y < minY)
 				minY = y;
-				
+
 			if (i == begin) {
 				//Defining outline
 				path.moveTo(x, y);
@@ -255,14 +243,14 @@ public class LineChartView extends ChartView {
 
 			x = set.getEntry(i).getX();
 			y = set.getEntry(i).getY();
-			
+
 			// Get minimum display Y to optimize gradient
-			if (y < minY) 
+			if (y < minY)
 				minY = y;
 
 			thisPointX = x;
 			thisPointY = y;
-			
+
 			nextPointX = set.getEntry(i + 1).getX();
 			nextPointY = set.getEntry(i + 1).getY();
 
@@ -279,11 +267,11 @@ public class LineChartView extends ChartView {
 			secondControlY = nextPointY - (0.15f * endDiffY);
 
 			//Define outline
-	        path.cubicTo(firstControlX, firstControlY, 
+	        path.cubicTo(firstControlX, firstControlY,
 	        		secondControlX, secondControlY, nextPointX, nextPointY);
-		
+
 	        //Define background
-	        bgPath.cubicTo(firstControlX, firstControlY, 
+	        bgPath.cubicTo(firstControlX, firstControlY,
 	        		secondControlX, secondControlY, nextPointX, nextPointY);
 		}
 
@@ -303,11 +291,11 @@ public class LineChartView extends ChartView {
 	 * Responsible for drawing line background
 	 */
 	private void drawBackground(Canvas canvas, Path path, LineSet set, float minDisplayY){
-		
+
 		float innerChartBottom = super.getInnerChartBottom();
-		
+
 		mStyle.mFillPaint.setAlpha((int)(set.getAlpha() * 255));
-		
+
 		if(set.hasFill())
 			mStyle.mFillPaint.setColor(set.getFillColor());
 		if(set.hasGradientFill())
@@ -346,15 +334,15 @@ public class LineChartView extends ChartView {
 	public ArrayList<ArrayList<Region>> defineRegions(ArrayList<ChartSet> data){
 
 		ArrayList<ArrayList<Region>> result = new ArrayList<>(data.size());
-		
+
 		ArrayList<Region> regionSet;
 		float x;
 		float y;
 		for(ChartSet set : data){
-			
+
 			regionSet = new ArrayList<>(set.size());
 			for(ChartEntry e : set.getEntries()){
-				
+
 				x = e.getX();
 				y = e.getY();
 				regionSet.add(new Region((int)(x - mClickableRadius),
@@ -412,7 +400,7 @@ public class LineChartView extends ChartView {
     }
 
 
-    
+
 	/**
 	 * Class responsible to style the LineChart!
 	 * Can be instantiated with or without attributes.
@@ -427,12 +415,14 @@ public class LineChartView extends ChartView {
 		private Paint mFillPaint;
 
 
-		Style() {}
+		Style() {
+			init();
+		}
 
 
-		Style(TypedArray attrs) {}
-
-
+		Style(TypedArray attrs) {
+			init();
+		}
 
 		private void init(){
 
@@ -452,17 +442,5 @@ public class LineChartView extends ChartView {
 			mFillPaint = new Paint();
 			mFillPaint.setStyle(Paint.Style.FILL);
 	    }
-
-
-
-	    private void clean(){
-
-	    	mLinePaint = null;
-	    	mFillPaint = null;
-	    	mDotsPaint = null;
-	    }
-
-
 	}
-
 }

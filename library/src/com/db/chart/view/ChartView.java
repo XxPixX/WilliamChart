@@ -243,7 +243,8 @@ public abstract class ChartView extends RelativeLayout{
 
 
 	private void init(){
-
+        this.setWillNotDraw(false);
+        style.init();
 		mReadyToDraw = false;
 		mSetClicked = -1;
 		mIndexClicked = -1;
@@ -256,26 +257,6 @@ public abstract class ChartView extends RelativeLayout{
 		mGridNRows = DEFAULT_GRID_ROWS;
 		mGridNColumns = DEFAULT_GRID_COLUMNS;
 	}
-
-
-
-
-	@Override
-	public void onAttachedToWindow(){
-		super.onAttachedToWindow();
-
-		this.setWillNotDraw(false);
-		style.init();
-	}
-
-
-	@Override
-	public void onDetachedFromWindow(){
-		super.onDetachedFromWindow();
-
-		style.clean();
-	}
-
 
 	@Override
 	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -1607,6 +1588,8 @@ public abstract class ChartView extends RelativeLayout{
 
 			labelsColor = DEFAULT_COLOR;
 			fontSize = getResources().getDimension(R.dimen.font_size);
+
+			init();
 		}
 
 
@@ -1629,11 +1612,12 @@ public abstract class ChartView extends RelativeLayout{
 			if (typefaceName != null)
 				typeface = Typeface.createFromAsset(getResources().
 						getAssets(), typefaceName);
+
+            init();
 		}
 
 
 		private void init(){
-
 			chartPaint = new Paint();
 			chartPaint.setColor(axisColor);
 			chartPaint.setStyle(Paint.Style.STROKE);
@@ -1647,17 +1631,5 @@ public abstract class ChartView extends RelativeLayout{
 			labelsPaint.setTextSize(fontSize);
 			labelsPaint.setTypeface(typeface);
 		}
-
-
-		public void clean() {
-
-			chartPaint = null;
-			labelsPaint = null;
-			gridPaint = null;
-			thresholdPaint = null;
-		}
-
 	}
-
-
 }
