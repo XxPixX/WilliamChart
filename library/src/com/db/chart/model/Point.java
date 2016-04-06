@@ -80,6 +80,20 @@ public class Point extends ChartEntry {
         mDrawable = null;
     }
 
+    public Point(String label, @FloatRange(from = 0.0, to = 1.0) float xPos, float value) {
+        super(label, xPos, value);
+
+        isVisible = false;
+
+        mRadius = Tools.fromDpToPx(DOTS_THICKNESS);
+
+        mHasStroke = false;
+        mStrokeThickness = Tools.fromDpToPx(DOTS_RADIUS);
+        mStrokeColor = DEFAULT_COLOR;
+
+        mDrawable = null;
+    }
+
 
     /**
      * Whether the Point has stroke defined or not.

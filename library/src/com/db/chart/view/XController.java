@@ -19,6 +19,7 @@ package com.db.chart.view;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.support.annotation.FloatRange;
 
 
 /**
@@ -71,6 +72,10 @@ public class XController extends AxisController {
                     (((value - minLabelValue) * screenStep) / (labelsValues.get(1) - minLabelValue)));
         else
             return labelsPos.get(index);
+    }
+
+    float parsePos(@FloatRange(from = 0.0, to = 1.0) float position) {
+        return chartView.getInnerChartLeft() + position * (chartView.getInnerChartRight() - chartView.getInnerChartLeft());
     }
 
 

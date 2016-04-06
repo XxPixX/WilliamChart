@@ -35,6 +35,8 @@ public abstract class ChartSet {
      */
     final private ArrayList<ChartEntry> mEntries;
 
+    private ArrayList<String> mLabels;
+
 
     /**
      * Paint alpha value from 0 to 1
@@ -50,6 +52,7 @@ public abstract class ChartSet {
 
     ChartSet() {
         mEntries = new ArrayList<>();
+        mLabels = new ArrayList<>();
         mAlpha = 1;
         mIsVisible = false;
     }
@@ -84,7 +87,7 @@ public abstract class ChartSet {
 	
 	
 	/*
-	 * --------
+     * --------
 	 * Getters
 	 * --------
 	 */
@@ -131,7 +134,6 @@ public abstract class ChartSet {
         return mEntries.get(index).getLabel();
     }
 
-
     /**
      * Get screen points.
      *
@@ -168,11 +170,11 @@ public abstract class ChartSet {
     public boolean isVisible() {
         return mIsVisible;
     }
-	
+
 	
 	
 	/*
-	 * --------
+     * --------
 	 * Setters
 	 * --------
 	 */
@@ -233,4 +235,12 @@ public abstract class ChartSet {
     }
 
 
+    public void setLabels(ArrayList<String> labels) {
+        this.mLabels = labels;
+        if (mLabels.isEmpty()) mLabels.add("");
+    }
+
+    public ArrayList<String> getLabels() {
+        return mLabels;
+    }
 }

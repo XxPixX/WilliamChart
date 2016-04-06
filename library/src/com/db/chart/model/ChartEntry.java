@@ -35,6 +35,7 @@ public abstract class ChartEntry {
      */
     final private String mLabel;
     private float mValue;
+    private Float mXValue;
 
 
     /**
@@ -74,6 +75,19 @@ public abstract class ChartEntry {
     ChartEntry(String label, float value) {
         mLabel = label;
         mValue = value;
+
+        mColor = DEFAULT_COLOR;
+
+        mShadowRadius = 0;
+        mShadowDx = 0;
+        mShadowDy = 0;
+        mShadowColor = new int[4];
+    }
+
+    ChartEntry(String label, float xValue, float value) {
+        mLabel = label;
+        mValue = value;
+        mXValue = xValue;
 
         mColor = DEFAULT_COLOR;
 
@@ -146,7 +160,7 @@ public abstract class ChartEntry {
 
 	
 	/*
-	 * --------
+     * --------
 	 * Setters
 	 * --------
 	 */
@@ -221,4 +235,11 @@ public abstract class ChartEntry {
                 "X = " + mX + "\n" + "Y = " + mY;
     }
 
+    public Float getmXValue() {
+        return mXValue;
+    }
+
+    public void setmXValue(float mXValue) {
+        this.mXValue = mXValue;
+    }
 }

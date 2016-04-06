@@ -317,11 +317,21 @@ public abstract class ChartView extends RelativeLayout {
         int nEntries = data.get(0).size();
         for (ChartSet set : data) {
             for (int i = 0; i < nEntries; i++) {
-                set.getEntry(i)
-                        .setCoordinates(horController.parsePos(i, set.getValue(i)),
-                                verController.parsePos(i, set.getValue(i)));
+                if (set.getEntry(i).getmXValue() != null)
+                    set.getEntry(i).setCoordinates(
+                            horController.parsePos(set.getEntry(i).getmXValue()),
+                            verController.parsePos(i, set.getValue(i)));
+                else
+                    set.getEntry(i).setCoordinates(
+                            horController.parsePos(i, set.getValue(i)),
+                            verController.parsePos(i, set.getValue(i)));
+
             }
         }
+    }
+
+    public void setWillProvideOwnXLabels(boolean ownXLabels){
+        horController.setWillProvideOwnLabels(ownXLabels);
     }
 
 

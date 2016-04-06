@@ -34,6 +34,8 @@ import java.util.ArrayList;
 public abstract class AxisController {
 
 
+    boolean willProvideLabels = false;
+
     public enum LabelPosition {
         NONE, OUTSIDE, INSIDE
     }
@@ -237,6 +239,8 @@ public abstract class AxisController {
         if (handleValues) {
             labelsValues = calcLabels();
             labels = getLabelsFromValues();
+        } else if (willProvideLabels) {
+            labels = getLabelsFromCustom();
         } else {
             labels = getLabelsFromData();
         }
@@ -301,6 +305,10 @@ public abstract class AxisController {
         for (int i = 0; i < size; i++)
             result.add(chartView.data.get(0).getLabel(i));
         return result;
+    }
+
+    private ArrayList<String> getLabelsFromCustom() {
+        return chartView.data.get(0).getLabels();
     }
 
 
@@ -436,4 +444,7 @@ public abstract class AxisController {
         minLabelValue = minValue;
     }
 
+    public void setWillProvideOwnLabels(boolean willProvideLabels) {
+        this.willProvideLabels = willProvideLabels;
+    }
 }
