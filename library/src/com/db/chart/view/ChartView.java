@@ -908,7 +908,7 @@ public abstract class ChartView extends RelativeLayout {
                 }
             }
 
-        return true;
+        return false;
     }
 
 	
